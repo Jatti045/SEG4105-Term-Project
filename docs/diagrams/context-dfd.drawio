@@ -1,0 +1,87 @@
+<mxfile host="build_drawio.py">
+  <diagram id="dfd" name="Context Data Flow Diagram">
+    <mxGraphModel grid="1" gridSize="10" guides="1" page="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="proc-0" value="" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="365" y="225" width="170" height="110" />
+        </mxCell>
+        <mxCell id="proc-0-id" value="0" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=0;left=0;bottom=0;right=1;fillColor=none;fontSize=11;" parent="proc-0" vertex="1">
+          <mxGeometry as="geometry" x="0" y="0" width="34" height="24" />
+        </mxCell>
+        <mxCell id="proc-0-name" value="Smart Inventory Fridge System" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=1;left=0;bottom=1;right=0;fillColor=#FFFFFF;fontSize=12;spacingLeft=12;spacingRight=12;" parent="proc-0" vertex="1">
+          <mxGeometry as="geometry" x="1" y="24" width="168" height="56" />
+        </mxCell>
+        <mxCell id="ent-E1" value="Kitchen Inventory Staff" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="40" y="40" width="160" height="60" />
+        </mxCell>
+        <mxCell id="ent-E2" value="Purchasing Staff" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="40" y="440" width="160" height="60" />
+        </mxCell>
+        <mxCell id="ent-E3" value="Manager" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="700" y="440" width="160" height="60" />
+        </mxCell>
+        <mxCell id="ent-E4" value="Physical Refrigerator Contents" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="700" y="40" width="160" height="60" />
+        </mxCell>
+        <mxCell id="flow-F1" value="Item details, expiry dates, inventory&lt;br&gt;corrections, inventory queries" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.3000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3235;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E1" target="proc-0">
+          <mxGeometry as="geometry" relative="1" x="-0.4315">
+            <Array as="points">
+              <mxPoint x="420" y="58" />
+            </Array>
+            <mxPoint x="0.0" y="-18.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-F2" value="Current inventory, expiry&lt;br&gt;warnings, low-stock notifications" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.2455;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3125;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-0" target="ent-E1">
+          <mxGeometry as="geometry" relative="1" x="-0.3560">
+            <Array as="points">
+              <mxPoint x="90" y="252" />
+            </Array>
+            <mxPoint x="0.0" y="-18.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-F3" value="Stock and usage queries" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.7000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3235;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E2" target="proc-0">
+          <mxGeometry as="geometry" relative="1" x="-0.4005">
+            <Array as="points">
+              <mxPoint x="420" y="482" />
+            </Array>
+            <mxPoint x="0.0" y="-11.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-F4" value="Stock levels, low-stock&lt;br&gt;information, usage information" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.7545;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6875;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-0" target="ent-E2">
+          <mxGeometry as="geometry" relative="1" x="-0.3804">
+            <Array as="points">
+              <mxPoint x="150" y="308" />
+            </Array>
+            <mxPoint x="0.0" y="18.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-F5" value="Alert thresholds, notification&lt;br&gt;preferences, report requests,&lt;br&gt;alert clearances" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.7000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6765;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E3" target="proc-0">
+          <mxGeometry as="geometry" relative="1" x="-0.4005">
+            <Array as="points">
+              <mxPoint x="480" y="482" />
+            </Array>
+            <mxPoint x="0.0" y="-25.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-F6" value="Inventory reports, usage reports,&lt;br&gt;alerts, settings confirmation" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-0" target="ent-E3">
+          <mxGeometry as="geometry" relative="1" x="-0.3951">
+            <Array as="points">
+              <mxPoint x="780" y="280" />
+            </Array>
+            <mxPoint x="0.0" y="-18.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-F7" value="Item images, shelf weight readings" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.3000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6765;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E4" target="proc-0">
+          <mxGeometry as="geometry" relative="1" x="-0.4315">
+            <Array as="points">
+              <mxPoint x="480" y="58" />
+            </Array>
+            <mxPoint x="0.0" y="-11.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

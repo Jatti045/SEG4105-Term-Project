@@ -7,3 +7,7 @@ __pycache__/
 build/
 dist/
 *.log
+
+# AI assistant instructions (personal)
+CLAUDE.md
+AGENTS.md

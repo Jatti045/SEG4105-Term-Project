@@ -1,0 +1,334 @@
+{
+  "diagram": "Context Data Flow Diagram",
+  "notation": "Gane-Sarson",
+  "version": "2.0",
+  "changes_from_deliverable_1": [
+    "Added the Physical Refrigerator Contents external entity (E4) and its data flow (F7). The cameras and sensors are inside the system boundary, so the items they observe are the source of that data. Without E4, on-device capture had no input source."
+  ],
+  "layout": {
+    "nodes": {
+      "0":  { "x": 365, "y": 225, "w": 170, "h": 110 },
+      "E1": { "x": 40,  "y": 40,  "w": 160, "h": 60 },
+      "E2": { "x": 40,  "y": 440, "w": 160, "h": 60 },
+      "E3": { "x": 700, "y": 440, "w": 160, "h": 60 },
+      "E4": { "x": 700, "y": 40,  "w": 160, "h": 60 }
+    },
+    "flows": {
+      "F1": { "path": [[200, 58],  [420, 58],  [420, 225]], "label_segment": 0, "label_side": "above", "label_wrap": 38 },
+      "F2": { "path": [[365, 252], [90, 252],  [90, 100]],  "label_segment": 0, "label_side": "above" },
+      "F3": { "path": [[200, 482], [420, 482], [420, 335]], "label_segment": 0, "label_side": "above" },
+      "F4": { "path": [[365, 308], [150, 308], [150, 440]], "label_segment": 0, "label_side": "below" },
+      "F5": { "path": [[700, 482], [480, 482], [480, 335]], "label_segment": 0, "label_side": "above" },
+      "F6": { "path": [[535, 280], [780, 280], [780, 440]], "label_segment": 0, "label_side": "above" },
+      "F7": { "path": [[700, 58],  [480, 58],  [480, 225]], "label_segment": 0, "label_side": "above" }
+    }
+  },
+  "system": {
+    "id": "0",
+    "name": "Smart Inventory Fridge System",
+    "description": "IoT-enabled refrigerator (simulated) and its supporting cloud platform. The fridge sends raw row readings and shelf images to the cloud (ADR-001). The cloud runs image recognition and handles inventory, expiry tracking, alerts, dashboards, and reports."
+  },
+  "external_entities": [
+    {
+      "id": "E1",
+      "name": "Kitchen Inventory Staff",
+      "type": "person",
+      "description": "Staff who stock and use refrigerated items day to day. They confirm details the system cannot detect and respond to expiry and low-stock alerts."
+    },
+    {
+      "id": "E2",
+      "name": "Purchasing Staff",
+      "type": "person",
+      "description": "Staff who decide what to reorder, based on stock levels and usage history."
+    },
+    {
+      "id": "E3",
+      "name": "Manager",
+      "type": "person",
+      "description": "Configures alert thresholds and notification preferences, and reviews inventory and usage reports."
+    },
+    {
+      "id": "E4",
+      "name": "Physical Refrigerator Contents",
+      "type": "physical",
+      "description": "The physical items stored in the refrigerator. The system observes them through cameras and shelf weight sensors. In this project, a simulator generates these observations."
+    }
+  ],
+  "data_flows": [
+    {
+      "id": "F1",
+      "from": "E1",
+      "to": "0",
+      "label": "Item details, expiry dates, inventory corrections, inventory queries",
+      "trigger": "On demand, through the dashboard",
+      "data": [
+        {
+          "name": "item_details",
+          "description": "Details of an item the system could not identify automatically, provided or confirmed by staff.",
+          "example": {
+            "detection_id": "DET-20261127-0031",
+            "product_name": "Greek yogurt",
+            "category": "dairy",
+            "unit": "tub",
+            "quantity": 8
+          }
+        },
+        {
+          "name": "expiry_date",
+          "description": "Expiry date for a stock lot, entered when it cannot be read from the package.",
+          "example": {
+            "lot_id": "LOT-0142",
+            "expiry_date": "2026-12-03"
+          }
+        },
+        {
+          "name": "inventory_correction",
+          "description": "Manual correction to a detected quantity or item.",
+          "example": {
+            "lot_id": "LOT-0142",
+            "corrected_quantity": 6,
+            "reason": "two tubs hidden behind milk cartons"
+          }
+        },
+        {
+          "name": "inventory_query",
+          "description": "Request to view current inventory, optionally filtered.",
+          "example": {
+            "fridge_id": "FRIDGE-01",
+            "filter": { "expiry_status": "expiring_soon" }
+          }
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "from": "0",
+      "to": "E1",
+      "label": "Current inventory, expiry warnings, low-stock notifications",
+      "trigger": "On query, or pushed when an alert condition is met",
+      "data": [
+        {
+          "name": "current_inventory",
+          "description": "Snapshot of the items in a refrigerator, with quantities and expiry status.",
+          "example": {
+            "fridge_id": "FRIDGE-01",
+            "as_of": "2026-11-27T14:05:12Z",
+            "items": [
+              { "product_name": "Milk", "quantity": 2, "unit": "carton", "expiry_date": "2026-11-28", "expiry_status": "expiring_soon" }
+            ]
+          }
+        },
+        {
+          "name": "expiry_warning",
+          "description": "Alert that a stock lot is close to its expiry date or past it.",
+          "example": {
+            "alert_id": "ALR-0907",
+            "type": "expiry",
+            "product_name": "Milk",
+            "lot_id": "LOT-0139",
+            "expiry_date": "2026-11-28",
+            "days_remaining": 1
+          }
+        },
+        {
+          "name": "low_stock_notification",
+          "description": "Alert that an item's quantity is at or below its low-stock threshold.",
+          "example": {
+            "alert_id": "ALR-0908",
+            "type": "low_stock",
+            "product_name": "Baby spinach",
+            "quantity": 1,
+            "threshold": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "from": "E2",
+      "to": "0",
+      "label": "Stock and usage queries",
+      "trigger": "On demand, through the dashboard",
+      "data": [
+        {
+          "name": "stock_query",
+          "description": "Request for current stock levels across one or more refrigerators.",
+          "example": {
+            "scope": "all_fridges",
+            "below_threshold_only": true
+          }
+        },
+        {
+          "name": "usage_query",
+          "description": "Request for consumption and waste history for a product over a period.",
+          "example": {
+            "product_name": "Milk",
+            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "granularity": "week"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "from": "0",
+      "to": "E2",
+      "label": "Stock levels, low-stock information, usage information",
+      "trigger": "In response to a stock or usage query",
+      "data": [
+        {
+          "name": "stock_levels",
+          "description": "Current quantity and threshold for each product.",
+          "example": {
+            "as_of": "2026-11-27T14:05:12Z",
+            "levels": [
+              { "product_name": "Greek yogurt", "quantity": 8, "unit": "tub", "threshold": 3 }
+            ]
+          }
+        },
+        {
+          "name": "low_stock_information",
+          "description": "Products currently at or below their low-stock threshold.",
+          "example": {
+            "items": [
+              { "product_name": "Baby spinach", "quantity": 1, "threshold": 2, "below_threshold_since": "2026-11-26T09:12:00Z" }
+            ]
+          }
+        },
+        {
+          "name": "usage_information",
+          "description": "Consumed and wasted quantities for a product over a period.",
+          "example": {
+            "product_name": "Milk",
+            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "consumed": 14,
+            "wasted": 2,
+            "unit": "carton"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "from": "E3",
+      "to": "0",
+      "label": "Alert thresholds, notification preferences, report requests, alert clearances",
+      "trigger": "On demand, through the dashboard",
+      "data": [
+        {
+          "name": "alert_threshold",
+          "description": "Low-stock threshold and expiry warning window for a product.",
+          "example": {
+            "product_name": "Milk",
+            "low_stock_threshold": 3,
+            "expiry_warning_days": 2
+          }
+        },
+        {
+          "name": "notification_preferences",
+          "description": "Which alerts are delivered, to which roles, and through which channels.",
+          "example": {
+            "alert_types": ["expiry", "low_stock"],
+            "recipients": ["kitchen_staff", "manager"],
+            "channels": ["email", "dashboard"]
+          }
+        },
+        {
+          "name": "report_request",
+          "description": "Request to generate an inventory or usage report.",
+          "example": {
+            "report_type": "usage",
+            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "format": "pdf"
+          }
+        },
+        {
+          "name": "alert_clearance",
+          "description": "Manager clears an alert after it has been dealt with. Alerts stay active until they are cleared.",
+          "example": {
+            "alert_id": "ALR-0907",
+            "action": "clear",
+            "note": "milk used for today's specials"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "from": "0",
+      "to": "E3",
+      "label": "Inventory reports, usage reports, alerts, settings confirmation",
+      "trigger": "On request, or pushed when an alert condition is met",
+      "data": [
+        {
+          "name": "inventory_report",
+          "description": "Point-in-time summary of stock levels and expiry status.",
+          "example": {
+            "report_id": "RPT-0051",
+            "type": "inventory",
+            "generated_at": "2026-11-27T14:10:00Z",
+            "summary": { "products": 24, "low_stock": 3, "expiring_soon": 5, "expired": 1 }
+          }
+        },
+        {
+          "name": "usage_report",
+          "description": "Consumption and waste trends over a period.",
+          "example": {
+            "report_id": "RPT-0052",
+            "type": "usage",
+            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "summary": { "units_consumed": 412, "units_wasted": 19, "waste_rate": 0.044 }
+          }
+        },
+        {
+          "name": "alert",
+          "description": "Expiry or low-stock alert, delivered according to the notification preferences.",
+          "example": {
+            "alert_id": "ALR-0907",
+            "type": "expiry",
+            "product_name": "Milk",
+            "days_remaining": 1
+          }
+        },
+        {
+          "name": "settings_confirmation",
+          "description": "Confirmation that threshold or preference changes were saved.",
+          "example": {
+            "setting": "alert_threshold",
+            "product_name": "Milk",
+            "status": "saved",
+            "effective_at": "2026-11-27T14:02:00Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F7",
+      "from": "E4",
+      "to": "0",
+      "label": "Item images, shelf weight readings",
+      "trigger": "Captured each time the refrigerator door closes",
+      "data": [
+        {
+          "name": "item_image",
+          "description": "Camera frame of a shelf. In this project, the simulator generates it as a ground-truth list of items, with configurable occlusion and noise.",
+          "example": {
+            "camera_id": "CAM-SHELF-2",
+            "captured_at": "2026-11-27T14:04:58.120Z",
+            "resolution": "1280x720",
+            "format": "jpeg"
+          }
+        },
+        {
+          "name": "shelf_weight_reading",
+          "description": "Total weight on a shelf from its load sensor. In this project, the simulator generates it with configurable sensor noise.",
+          "example": {
+            "sensor_id": "WS-SHELF-2",
+            "measured_at": "2026-11-27T14:04:58.300Z",
+            "grams": 3120
+          }
+        }
+      ]
+    }
+  ]
+}
