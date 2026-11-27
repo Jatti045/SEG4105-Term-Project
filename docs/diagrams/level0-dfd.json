@@ -1,0 +1,954 @@
+{
+  "diagram": "Level-0 Data Flow Diagram",
+  "notation": "Gane-Sarson",
+  "version": "0.3-draft",
+  "parent_diagram": "context-dfd.json",
+  "notes": [
+    "External entities are inherited from the parent context diagram.",
+    "Each external flow names the context flow it comes from in \"parent\". F1a and F1b together are F1, and so on. In \"data\", it lists the parent's data elements that it carries. build_drawio.py checks that every element of every context flow appears exactly once.",
+    "Internal flows (I2-I12) run between processes and data stores, so they do not appear on the context diagram.",
+    "v0.2 follows ADR-001: the fridge sends raw readings, and the backend runs image recognition. It also follows ADR-002: no offline buffering, so the Device Event Buffer store and flow I1 are removed. Stores are renumbered from D1."
+  ],
+  "processes": [
+    {
+      "id": "1.0",
+      "name": "Capture and Send Readings",
+      "location": "Fridge device",
+      "description": "When the door closes, reads every row (item ID, weight, item count), takes a shelf image, and sends the complete snapshot to the backend. No processing on the device (ADR-001) and no local buffering (ADR-002). In this project, a simulator supplies the sensor and camera input, with realistic latency and error rates."
+    },
+    {
+      "id": "2.0",
+      "name": "Recognize Items and Update Inventory",
+      "location": "Cloud",
+      "description": "Runs image recognition on the shelf images and checks the result against the row readings. Matches items to the product catalog, adds and removes stock items, and logs items that were thrown out. Also applies corrections, item details, and waste entries from staff."
+    },
+    {
+      "id": "3.0",
+      "name": "Manage Expiry and Stock Alerts",
+      "location": "Cloud",
+      "description": "Compares stock quantities and expiry dates against configured thresholds. Raises expiry warnings and low-stock notifications, saves them, and delivers them to the configured recipients. Does not raise an alert again while the same one is still active. Clears an alert when the manager clears it."
+    },
+    {
+      "id": "4.0",
+      "name": "Answer Inventory Queries",
+      "location": "Cloud",
+      "description": "Serves the dashboard: current inventory for kitchen staff, and stock levels and usage information for purchasing staff."
+    },
+    {
+      "id": "5.0",
+      "name": "Generate Reports",
+      "location": "Cloud",
+      "description": "Builds inventory and usage reports on request."
+    },
+    {
+      "id": "6.0",
+      "name": "Manage Users and Alert Settings",
+      "location": "Cloud",
+      "description": "Validates and saves user accounts, alert thresholds, and notification preferences, then confirms the change."
+    },
+    {
+      "id": "7.0",
+      "name": "Archive Daily Stock",
+      "location": "Cloud",
+      "description": "Runs at the end of each day. Reads current stock and saves each product's quantity as a daily snapshot. Daily usage is worked out from consecutive snapshots."
+    }
+  ],
+  "data_stores": [
+    {
+      "id": "D1",
+      "name": "Inventory",
+      "location": "Cloud",
+      "description": "Current stock items: product, row, entry date, expiry date, and status."
+    },
+    {
+      "id": "D2",
+      "name": "Product Catalog",
+      "location": "Cloud",
+      "description": "Known products: name, category, unit, typical shelf life, and recognition label."
+    },
+    {
+      "id": "D3",
+      "name": "Alert Settings",
+      "location": "Cloud",
+      "description": "Low-stock thresholds, expiry warning windows, and notification preferences."
+    },
+    {
+      "id": "D4",
+      "name": "Stock History",
+      "location": "Cloud",
+      "description": "Daily stock snapshots per product, and a record of every item thrown out (waste)."
+    },
+    {
+      "id": "D5",
+      "name": "Alerts",
+      "location": "Cloud",
+      "description": "Every alert raised, with type, product, and status. An alert stays active until the manager clears it."
+    },
+    {
+      "id": "D6",
+      "name": "Users",
+      "location": "Cloud",
+      "description": "Staff who use the dashboard and receive alerts: name, email, role, and whether the account is active."
+    }
+  ],
+  "data_flows": [
+    {
+      "id": "F7",
+      "parent": "F7",
+      "from": "E4",
+      "to": "1.0",
+      "label": "Item images, shelf weight readings",
+      "data": [
+        "item_image",
+        "shelf_weight_reading"
+      ]
+    },
+    {
+      "id": "F1a",
+      "parent": "F1",
+      "from": "E1",
+      "to": "2.0",
+      "label": "Item details, expiry dates, inventory corrections, waste entries",
+      "data": [
+        "item_details",
+        "expiry_date",
+        "inventory_correction",
+        "waste_entry"
+      ]
+    },
+    {
+      "id": "F1b",
+      "parent": "F1",
+      "from": "E1",
+      "to": "4.0",
+      "label": "Inventory queries",
+      "data": [
+        "inventory_query"
+      ]
+    },
+    {
+      "id": "F2a",
+      "parent": "F2",
+      "from": "4.0",
+      "to": "E1",
+      "label": "Current inventory",
+      "data": [
+        "current_inventory"
+      ]
+    },
+    {
+      "id": "F2b",
+      "parent": "F2",
+      "from": "3.0",
+      "to": "E1",
+      "label": "Expiry warnings, low-stock notifications",
+      "data": [
+        "expiry_warning",
+        "low_stock_notification"
+      ]
+    },
+    {
+      "id": "F3",
+      "parent": "F3",
+      "from": "E2",
+      "to": "4.0",
+      "label": "Stock and usage queries",
+      "data": [
+        "stock_query",
+        "usage_query"
+      ]
+    },
+    {
+      "id": "F4",
+      "parent": "F4",
+      "from": "4.0",
+      "to": "E2",
+      "label": "Stock levels, low-stock information, usage information",
+      "data": [
+        "stock_levels",
+        "low_stock_information",
+        "usage_information"
+      ]
+    },
+    {
+      "id": "F5a",
+      "parent": "F5",
+      "from": "E3",
+      "to": "6.0",
+      "label": "Alert thresholds, notification preferences, user accounts",
+      "data": [
+        "alert_threshold",
+        "notification_preferences",
+        "user_account"
+      ]
+    },
+    {
+      "id": "F5b",
+      "parent": "F5",
+      "from": "E3",
+      "to": "5.0",
+      "label": "Report requests",
+      "data": [
+        "report_request"
+      ]
+    },
+    {
+      "id": "F5c",
+      "parent": "F5",
+      "from": "E3",
+      "to": "3.0",
+      "label": "Alert clearances",
+      "data": [
+        "alert_clearance"
+      ]
+    },
+    {
+      "id": "F6a",
+      "parent": "F6",
+      "from": "5.0",
+      "to": "E3",
+      "label": "Inventory reports, usage reports",
+      "data": [
+        "inventory_report",
+        "usage_report"
+      ]
+    },
+    {
+      "id": "F6b",
+      "parent": "F6",
+      "from": "3.0",
+      "to": "E3",
+      "label": "Alerts",
+      "data": [
+        "alert"
+      ]
+    },
+    {
+      "id": "F6c",
+      "parent": "F6",
+      "from": "6.0",
+      "to": "E3",
+      "label": "Settings confirmation",
+      "data": [
+        "settings_confirmation"
+      ]
+    },
+    {
+      "id": "I2",
+      "from": "1.0",
+      "to": "2.0",
+      "label": "Row readings and shelf images",
+      "description": "The fridge-to-backend message, sent over TLS. It carries a full snapshot of every row, not only what changed, so the first message after an outage brings the backend up to date (ADR-002). Timestamps let end-to-end latency be measured against the 60-second requirement.",
+      "example": {
+        "schema_version": 1,
+        "fridge_id": "FRIDGE-01",
+        "captured_at": "2026-11-27T14:04:58.120Z",
+        "sent_at": "2026-11-27T14:04:58.400Z",
+        "rows": [
+          {
+            "row_id": "R3",
+            "item_id": "milk_2l",
+            "weight_g": 6240,
+            "item_count": 3,
+            "image": "FRIDGE-01-R3-20261127T140458.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "id": "I3",
+      "from": "2.0",
+      "to": "D2",
+      "bidirectional": true,
+      "label": "Product details",
+      "description": "Looks up the product for each detected label. Adds new products when staff provide details for an unrecognised item."
+    },
+    {
+      "id": "I4",
+      "from": "2.0",
+      "to": "D4",
+      "label": "Waste records",
+      "description": "One record per item thrown out: the item, reason, and time. Logged by staff or detected by the system."
+    },
+    {
+      "id": "I5",
+      "from": "2.0",
+      "to": "D1",
+      "label": "Stock item updates",
+      "description": "Adds new stock items, and marks items consumed, wasted, or removed."
+    },
+    {
+      "id": "I6",
+      "from": "D4",
+      "to": "4.0",
+      "label": "Stock history",
+      "description": "Daily snapshots and waste records for the queried product and period."
+    },
+    {
+      "id": "I7",
+      "from": "D1",
+      "to": "4.0",
+      "label": "Current stock",
+      "description": "Current stock lots and quantities for the dashboard."
+    },
+    {
+      "id": "I8",
+      "from": "D4",
+      "to": "5.0",
+      "label": "Stock history",
+      "description": "Daily snapshots and waste records for the report period."
+    },
+    {
+      "id": "I9",
+      "from": "D1",
+      "to": "5.0",
+      "label": "Stock data",
+      "description": "Stock levels and expiry status for inventory reports."
+    },
+    {
+      "id": "I10",
+      "from": "D1",
+      "to": "3.0",
+      "label": "Stock and expiry data",
+      "description": "Quantities and expiry dates to evaluate against thresholds."
+    },
+    {
+      "id": "I11",
+      "from": "D3",
+      "to": "3.0",
+      "label": "Thresholds and preferences",
+      "description": "Low-stock thresholds, expiry warning windows, and who receives which alerts."
+    },
+    {
+      "id": "I12",
+      "from": "6.0",
+      "to": "D3",
+      "label": "Updated settings",
+      "description": "Validated threshold and preference changes."
+    },
+    {
+      "id": "I13",
+      "from": "3.0",
+      "to": "D5",
+      "bidirectional": true,
+      "label": "Alert records",
+      "description": "Saves new alerts and marks them cleared. Reads active alerts so the same alert is not raised twice."
+    },
+    {
+      "id": "I14",
+      "from": "6.0",
+      "to": "D6",
+      "label": "User accounts",
+      "description": "Added, changed, or deactivated user accounts."
+    },
+    {
+      "id": "I15",
+      "from": "D6",
+      "to": "3.0",
+      "label": "Alert recipients",
+      "description": "Names, emails, and roles of active users, so alerts reach the right people."
+    },
+    {
+      "id": "I16",
+      "from": "D1",
+      "to": "7.0",
+      "label": "End-of-day stock",
+      "description": "Count of in-stock items per product at the end of the day."
+    },
+    {
+      "id": "I17",
+      "from": "7.0",
+      "to": "D4",
+      "label": "Daily stock snapshots",
+      "description": "One row per product per day with the end-of-day quantity."
+    }
+  ],
+  "layout": {
+    "nodes": {
+      "E4": {
+        "x": 40,
+        "y": 40,
+        "w": 180,
+        "h": 60
+      },
+      "E1": {
+        "x": 600,
+        "y": 40,
+        "w": 240,
+        "h": 60
+      },
+      "E2": {
+        "x": 1000,
+        "y": 240,
+        "w": 180,
+        "h": 70
+      },
+      "E3": {
+        "x": 980,
+        "y": 860,
+        "w": 240,
+        "h": 60
+      },
+      "1.0": {
+        "x": 30,
+        "y": 220,
+        "w": 200,
+        "h": 100
+      },
+      "2.0": {
+        "x": 340,
+        "y": 220,
+        "w": 200,
+        "h": 100
+      },
+      "4.0": {
+        "x": 680,
+        "y": 220,
+        "w": 200,
+        "h": 100
+      },
+      "5.0": {
+        "x": 680,
+        "y": 640,
+        "w": 200,
+        "h": 100
+      },
+      "3.0": {
+        "x": 1080,
+        "y": 640,
+        "w": 240,
+        "h": 100
+      },
+      "6.0": {
+        "x": 1380,
+        "y": 640,
+        "w": 200,
+        "h": 100
+      },
+      "D2": {
+        "x": 240,
+        "y": 130,
+        "w": 180,
+        "h": 36
+      },
+      "D4": {
+        "x": 460,
+        "y": 440,
+        "w": 310,
+        "h": 36
+      },
+      "D1": {
+        "x": 800,
+        "y": 440,
+        "w": 380,
+        "h": 36
+      },
+      "D3": {
+        "x": 1240,
+        "y": 440,
+        "w": 340,
+        "h": 36
+      },
+      "D5": {
+        "x": 1230,
+        "y": 780,
+        "w": 180,
+        "h": 36
+      },
+      "D6": {
+        "x": 1680,
+        "y": 672,
+        "w": 180,
+        "h": 36
+      },
+      "7.0": {
+        "x": 400,
+        "y": 640,
+        "w": 200,
+        "h": 100
+      }
+    },
+    "flows": {
+      "F7": {
+        "path": [
+          [
+            130,
+            100
+          ],
+          [
+            130,
+            220
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left",
+        "label_wrap": 18
+      },
+      "F1a": {
+        "path": [
+          [
+            600,
+            70
+          ],
+          [
+            500,
+            70
+          ],
+          [
+            500,
+            220
+          ]
+        ],
+        "label_segment": 1,
+        "label_side": "right",
+        "label_wrap": 24,
+        "label_t": 0.45
+      },
+      "F1b": {
+        "path": [
+          [
+            720,
+            100
+          ],
+          [
+            720,
+            220
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left",
+        "label_t": 0.75
+      },
+      "F2a": {
+        "path": [
+          [
+            790,
+            220
+          ],
+          [
+            790,
+            100
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right"
+      },
+      "F2b": {
+        "path": [
+          [
+            1210,
+            640
+          ],
+          [
+            1210,
+            70
+          ],
+          [
+            840,
+            70
+          ]
+        ],
+        "label_segment": 1,
+        "label_side": "above"
+      },
+      "F3": {
+        "path": [
+          [
+            1000,
+            295
+          ],
+          [
+            880,
+            295
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "below",
+        "label_wrap": 16
+      },
+      "F4": {
+        "path": [
+          [
+            880,
+            255
+          ],
+          [
+            1000,
+            255
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above",
+        "label_wrap": 18
+      },
+      "F5a": {
+        "path": [
+          [
+            1220,
+            875
+          ],
+          [
+            1430,
+            875
+          ],
+          [
+            1430,
+            740
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above",
+        "label_wrap": 30
+      },
+      "F5b": {
+        "path": [
+          [
+            980,
+            905
+          ],
+          [
+            760,
+            905
+          ],
+          [
+            760,
+            740
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "below"
+      },
+      "F6a": {
+        "path": [
+          [
+            820,
+            740
+          ],
+          [
+            820,
+            875
+          ],
+          [
+            980,
+            875
+          ]
+        ],
+        "label_segment": 1,
+        "label_side": "above",
+        "label_wrap": 18
+      },
+      "F5c": {
+        "path": [
+          [
+            1180,
+            860
+          ],
+          [
+            1180,
+            740
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right",
+        "label_t": 0.3
+      },
+      "F6b": {
+        "path": [
+          [
+            1120,
+            740
+          ],
+          [
+            1120,
+            860
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left"
+      },
+      "F6c": {
+        "path": [
+          [
+            1530,
+            740
+          ],
+          [
+            1530,
+            905
+          ],
+          [
+            1220,
+            905
+          ]
+        ],
+        "label_segment": 1,
+        "label_side": "below"
+      },
+      "I2": {
+        "path": [
+          [
+            230,
+            270
+          ],
+          [
+            340,
+            270
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above",
+        "label_wrap": 16
+      },
+      "I3": {
+        "path": [
+          [
+            380,
+            220
+          ],
+          [
+            380,
+            166
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left"
+      },
+      "I4": {
+        "path": [
+          [
+            510,
+            320
+          ],
+          [
+            510,
+            440
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left"
+      },
+      "I5": {
+        "path": [
+          [
+            540,
+            300
+          ],
+          [
+            600,
+            300
+          ],
+          [
+            600,
+            390
+          ],
+          [
+            842,
+            390
+          ],
+          [
+            842,
+            440
+          ]
+        ],
+        "label_segment": 2,
+        "label_side": "above",
+        "label_t": 0.25
+      },
+      "I6": {
+        "path": [
+          [
+            725,
+            440
+          ],
+          [
+            725,
+            320
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right",
+        "label_t": 0.8
+      },
+      "I7": {
+        "path": [
+          [
+            866,
+            440
+          ],
+          [
+            866,
+            320
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right"
+      },
+      "I8": {
+        "path": [
+          [
+            725,
+            476
+          ],
+          [
+            725,
+            640
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left"
+      },
+      "I9": {
+        "path": [
+          [
+            866,
+            476
+          ],
+          [
+            866,
+            640
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right"
+      },
+      "I10": {
+        "path": [
+          [
+            1120,
+            476
+          ],
+          [
+            1120,
+            640
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left",
+        "label_wrap": 12
+      },
+      "I11": {
+        "path": [
+          [
+            1300,
+            476
+          ],
+          [
+            1300,
+            640
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right",
+        "label_wrap": 14
+      },
+      "I12": {
+        "path": [
+          [
+            1480,
+            640
+          ],
+          [
+            1480,
+            476
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right"
+      },
+      "I13": {
+        "path": [
+          [
+            1290,
+            740
+          ],
+          [
+            1290,
+            780
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "right"
+      },
+      "I14": {
+        "path": [
+          [
+            1580,
+            690
+          ],
+          [
+            1680,
+            690
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above",
+        "label_wrap": 14
+      },
+      "I15": {
+        "path": [
+          [
+            1760,
+            672
+          ],
+          [
+            1760,
+            600
+          ],
+          [
+            1350,
+            600
+          ],
+          [
+            1350,
+            690
+          ],
+          [
+            1320,
+            690
+          ]
+        ],
+        "label_segment": 1,
+        "label_side": "above",
+        "label_t": 0.35
+      },
+      "I16": {
+        "path": [
+          [
+            840,
+            476
+          ],
+          [
+            840,
+            600
+          ],
+          [
+            580,
+            600
+          ],
+          [
+            580,
+            640
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left",
+        "label_wrap": 16
+      },
+      "I17": {
+        "path": [
+          [
+            520,
+            640
+          ],
+          [
+            520,
+            476
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "left",
+        "label_wrap": 12
+      }
+    }
+  }
+}
