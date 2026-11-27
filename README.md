@@ -8,6 +8,10 @@ Run `python3 app.py` from the project root, then open <http://localhost:8080/inv
 
 The prototype uses simulated items. It flags quantities of two or fewer as low stock and marks items expiring within two days. The full project plans include physical fridge sensors, cloud synchronization, and a dashboard.
 
+## Database
+
+Run `docker compose up -d` to start PostgreSQL on `localhost:5432` (database, user and password all `smart_fridge` by default; override with `POSTGRES_*` in a `.env` file). [db/init/01_schema.sql](db/init/01_schema.sql) builds the tables from the [data dictionary](docs/data-dictionary.md). It runs only when the data volume is first created, so after changing it, run `docker compose down -v` and start again.
+
 ## Lab 8 teammate handoff
 
 Start with [issue #1](https://github.com/Jatti045/SEG4105-Term-Project/issues/1) for the four assignments, branch commands, pull request targets, and screenshots to capture.
