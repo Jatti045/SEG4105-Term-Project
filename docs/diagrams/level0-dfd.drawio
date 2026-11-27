@@ -76,6 +76,18 @@
         <mxCell id="proc-6.0-name" value="Manage Users and Alert Settings" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=1;left=0;bottom=1;right=0;fillColor=#FFFFFF;fontSize=12;spacingLeft=12;spacingRight=12;" parent="proc-6.0" vertex="1">
           <mxGeometry as="geometry" x="1" y="24" width="198" height="46" />
         </mxCell>
+        <mxCell id="proc-7.0" value="" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="400" y="640" width="200" height="100" />
+        </mxCell>
+        <mxCell id="proc-7.0-id" value="7.0" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=0;left=0;bottom=0;right=1;fillColor=none;fontSize=11;" parent="proc-7.0" vertex="1">
+          <mxGeometry as="geometry" x="0" y="0" width="34" height="24" />
+        </mxCell>
+        <mxCell id="proc-7.0-loc" value="Cloud" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;text;fillColor=none;strokeColor=none;fontSize=10;fontStyle=2;" parent="proc-7.0" vertex="1">
+          <mxGeometry as="geometry" x="34" y="0" width="166" height="24" />
+        </mxCell>
+        <mxCell id="proc-7.0-name" value="Archive Daily Stock" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=1;left=0;bottom=1;right=0;fillColor=#FFFFFF;fontSize=12;spacingLeft=12;spacingRight=12;" parent="proc-7.0" vertex="1">
+          <mxGeometry as="geometry" x="1" y="24" width="198" height="46" />
+        </mxCell>
         <mxCell id="store-D1" value="Inventory" style="shape=partialRectangle;top=1;left=1;bottom=1;right=0;html=1;whiteSpace=wrap;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;spacingLeft=40;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
           <mxGeometry as="geometry" x="800" y="440" width="380" height="36" />
         </mxCell>
@@ -94,7 +106,7 @@
         <mxCell id="store-D3-id" value="D3" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=0;left=0;bottom=0;right=1;fillColor=#D3D3D3;fontSize=11;" parent="store-D3" vertex="1">
           <mxGeometry as="geometry" x="0" y="0" width="34" height="36" />
         </mxCell>
-        <mxCell id="store-D4" value="Usage History" style="shape=partialRectangle;top=1;left=1;bottom=1;right=0;html=1;whiteSpace=wrap;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;spacingLeft=40;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+        <mxCell id="store-D4" value="Stock History" style="shape=partialRectangle;top=1;left=1;bottom=1;right=0;html=1;whiteSpace=wrap;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;spacingLeft=40;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
           <mxGeometry as="geometry" x="460" y="440" width="310" height="36" />
         </mxCell>
         <mxCell id="store-D4-id" value="D4" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=0;left=0;bottom=0;right=1;fillColor=#D3D3D3;fontSize=11;" parent="store-D4" vertex="1">
@@ -129,7 +141,7 @@
             <mxPoint x="-62.0" y="0.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-F1a" value="Item details, expiry&lt;br&gt;dates, inventory&lt;br&gt;corrections" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.8000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E1" target="proc-2.0">
+        <mxCell id="flow-F1a" value="Item details, expiry&lt;br&gt;dates, inventory&lt;br&gt;corrections, waste&lt;br&gt;entries" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.8000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E1" target="proc-2.0">
           <mxGeometry as="geometry" relative="1" x="0.3400">
             <Array as="points">
               <mxPoint x="500" y="70" />
@@ -217,12 +229,12 @@
             <mxPoint x="-53.0" y="0.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-I4" value="Usage records" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8500;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1613;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-2.0" target="store-D4">
+        <mxCell id="flow-I4" value="Waste records" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8500;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1613;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-2.0" target="store-D4">
           <mxGeometry as="geometry" relative="1" x="0.0000">
             <mxPoint x="-47.0" y="0.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-I5" value="Stock lot updates" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.8000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1105;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-2.0" target="store-D1">
+        <mxCell id="flow-I5" value="Stock item updates" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.8000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1105;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-2.0" target="store-D1">
           <mxGeometry as="geometry" relative="1" x="-0.0475">
             <Array as="points">
               <mxPoint x="600" y="300" />
@@ -232,7 +244,7 @@
             <mxPoint x="0.0" y="-11.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-I6" value="Usage history" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8548;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2250;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="store-D4" target="proc-4.0">
+        <mxCell id="flow-I6" value="Stock history" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8548;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2250;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="store-D4" target="proc-4.0">
           <mxGeometry as="geometry" relative="1" x="0.6000">
             <mxPoint x="47.0" y="0.0" as="offset" />
           </mxGeometry>
@@ -242,7 +254,7 @@
             <mxPoint x="47.0" y="0.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-I8" value="Usage history" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8548;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2250;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="store-D4" target="proc-5.0">
+        <mxCell id="flow-I8" value="Stock history" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8548;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2250;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="store-D4" target="proc-5.0">
           <mxGeometry as="geometry" relative="1" x="0.0000">
             <mxPoint x="-47.0" y="0.0" as="offset" />
           </mxGeometry>
@@ -285,6 +297,20 @@
               <mxPoint x="1350" y="690" />
             </Array>
             <mxPoint x="0.0" y="-11.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-I16" value="End-of-day stock" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.1053;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.9000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="store-D1" target="proc-7.0">
+          <mxGeometry as="geometry" relative="1" x="-0.7075">
+            <Array as="points">
+              <mxPoint x="840" y="600" />
+              <mxPoint x="580" y="600" />
+            </Array>
+            <mxPoint x="-56.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-I17" value="Daily stock&lt;br&gt;snapshots" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.6000;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1935;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-7.0" target="store-D4">
+          <mxGeometry as="geometry" relative="1" x="0.0000">
+            <mxPoint x="-41.0" y="0.0" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>

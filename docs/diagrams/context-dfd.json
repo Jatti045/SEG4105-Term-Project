@@ -7,20 +7,165 @@
   ],
   "layout": {
     "nodes": {
-      "0":  { "x": 365, "y": 225, "w": 170, "h": 110 },
-      "E1": { "x": 40,  "y": 40,  "w": 160, "h": 60 },
-      "E2": { "x": 40,  "y": 440, "w": 160, "h": 60 },
-      "E3": { "x": 700, "y": 440, "w": 160, "h": 60 },
-      "E4": { "x": 700, "y": 40,  "w": 160, "h": 60 }
+      "0": {
+        "x": 365,
+        "y": 225,
+        "w": 170,
+        "h": 110
+      },
+      "E1": {
+        "x": 40,
+        "y": 40,
+        "w": 160,
+        "h": 60
+      },
+      "E2": {
+        "x": 40,
+        "y": 440,
+        "w": 160,
+        "h": 60
+      },
+      "E3": {
+        "x": 700,
+        "y": 440,
+        "w": 160,
+        "h": 60
+      },
+      "E4": {
+        "x": 700,
+        "y": 40,
+        "w": 160,
+        "h": 60
+      }
     },
     "flows": {
-      "F1": { "path": [[200, 58],  [420, 58],  [420, 225]], "label_segment": 0, "label_side": "above", "label_wrap": 38 },
-      "F2": { "path": [[365, 252], [90, 252],  [90, 100]],  "label_segment": 0, "label_side": "above" },
-      "F3": { "path": [[200, 482], [420, 482], [420, 335]], "label_segment": 0, "label_side": "above" },
-      "F4": { "path": [[365, 308], [150, 308], [150, 440]], "label_segment": 0, "label_side": "below" },
-      "F5": { "path": [[700, 482], [480, 482], [480, 335]], "label_segment": 0, "label_side": "above" },
-      "F6": { "path": [[535, 280], [780, 280], [780, 440]], "label_segment": 0, "label_side": "above" },
-      "F7": { "path": [[700, 58],  [480, 58],  [480, 225]], "label_segment": 0, "label_side": "above" }
+      "F1": {
+        "path": [
+          [
+            200,
+            58
+          ],
+          [
+            420,
+            58
+          ],
+          [
+            420,
+            225
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above",
+        "label_wrap": 38
+      },
+      "F2": {
+        "path": [
+          [
+            365,
+            252
+          ],
+          [
+            90,
+            252
+          ],
+          [
+            90,
+            100
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above"
+      },
+      "F3": {
+        "path": [
+          [
+            200,
+            482
+          ],
+          [
+            420,
+            482
+          ],
+          [
+            420,
+            335
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above"
+      },
+      "F4": {
+        "path": [
+          [
+            365,
+            308
+          ],
+          [
+            150,
+            308
+          ],
+          [
+            150,
+            440
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "below"
+      },
+      "F5": {
+        "path": [
+          [
+            700,
+            482
+          ],
+          [
+            480,
+            482
+          ],
+          [
+            480,
+            335
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above"
+      },
+      "F6": {
+        "path": [
+          [
+            535,
+            280
+          ],
+          [
+            780,
+            280
+          ],
+          [
+            780,
+            440
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above"
+      },
+      "F7": {
+        "path": [
+          [
+            700,
+            58
+          ],
+          [
+            480,
+            58
+          ],
+          [
+            480,
+            225
+          ]
+        ],
+        "label_segment": 0,
+        "label_side": "above"
+      }
     }
   },
   "system": {
@@ -59,7 +204,7 @@
       "id": "F1",
       "from": "E1",
       "to": "0",
-      "label": "Item details, expiry dates, inventory corrections, inventory queries",
+      "label": "Item details, expiry dates, inventory corrections, inventory queries, waste entries",
       "trigger": "On demand, through the dashboard",
       "data": [
         {
@@ -95,7 +240,18 @@
           "description": "Request to view current inventory, optionally filtered.",
           "example": {
             "fridge_id": "FRIDGE-01",
-            "filter": { "expiry_status": "expiring_soon" }
+            "filter": {
+              "expiry_status": "expiring_soon"
+            }
+          }
+        },
+        {
+          "name": "waste_entry",
+          "description": "Staff log an item that was thrown out instead of used, with the reason.",
+          "example": {
+            "item_id": 5213,
+            "reason": "spoiled",
+            "note": "wilted lettuce"
           }
         }
       ]
@@ -114,7 +270,13 @@
             "fridge_id": "FRIDGE-01",
             "as_of": "2026-11-27T14:05:12Z",
             "items": [
-              { "product_name": "Milk", "quantity": 2, "unit": "carton", "expiry_date": "2026-11-28", "expiry_status": "expiring_soon" }
+              {
+                "product_name": "Milk",
+                "quantity": 2,
+                "unit": "carton",
+                "expiry_date": "2026-11-28",
+                "expiry_status": "expiring_soon"
+              }
             ]
           }
         },
@@ -163,7 +325,10 @@
           "description": "Request for consumption and waste history for a product over a period.",
           "example": {
             "product_name": "Milk",
-            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "period": {
+              "from": "2026-11-01",
+              "to": "2026-11-27"
+            },
             "granularity": "week"
           }
         }
@@ -182,7 +347,12 @@
           "example": {
             "as_of": "2026-11-27T14:05:12Z",
             "levels": [
-              { "product_name": "Greek yogurt", "quantity": 8, "unit": "tub", "threshold": 3 }
+              {
+                "product_name": "Greek yogurt",
+                "quantity": 8,
+                "unit": "tub",
+                "threshold": 3
+              }
             ]
           }
         },
@@ -191,7 +361,12 @@
           "description": "Products currently at or below their low-stock threshold.",
           "example": {
             "items": [
-              { "product_name": "Baby spinach", "quantity": 1, "threshold": 2, "below_threshold_since": "2026-11-26T09:12:00Z" }
+              {
+                "product_name": "Baby spinach",
+                "quantity": 1,
+                "threshold": 2,
+                "below_threshold_since": "2026-11-26T09:12:00Z"
+              }
             ]
           }
         },
@@ -200,7 +375,10 @@
           "description": "Consumed and wasted quantities for a product over a period.",
           "example": {
             "product_name": "Milk",
-            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "period": {
+              "from": "2026-11-01",
+              "to": "2026-11-27"
+            },
             "consumed": 14,
             "wasted": 2,
             "unit": "carton"
@@ -228,9 +406,18 @@
           "name": "notification_preferences",
           "description": "Which alerts are delivered, to which roles, and through which channels.",
           "example": {
-            "alert_types": ["expiry", "low_stock"],
-            "recipients": ["kitchen_staff", "manager"],
-            "channels": ["email", "dashboard"]
+            "alert_types": [
+              "expiry",
+              "low_stock"
+            ],
+            "recipients": [
+              "kitchen_staff",
+              "manager"
+            ],
+            "channels": [
+              "email",
+              "dashboard"
+            ]
           }
         },
         {
@@ -238,7 +425,10 @@
           "description": "Request to generate an inventory or usage report.",
           "example": {
             "report_type": "usage",
-            "period": { "from": "2026-11-01", "to": "2026-11-27" },
+            "period": {
+              "from": "2026-11-01",
+              "to": "2026-11-27"
+            },
             "format": "pdf"
           }
         },
@@ -277,7 +467,12 @@
             "report_id": "RPT-0051",
             "type": "inventory",
             "generated_at": "2026-11-27T14:10:00Z",
-            "summary": { "products": 24, "low_stock": 3, "expiring_soon": 5, "expired": 1 }
+            "summary": {
+              "products": 24,
+              "low_stock": 3,
+              "expiring_soon": 5,
+              "expired": 1
+            }
           }
         },
         {
@@ -286,8 +481,15 @@
           "example": {
             "report_id": "RPT-0052",
             "type": "usage",
-            "period": { "from": "2026-11-01", "to": "2026-11-27" },
-            "summary": { "units_consumed": 412, "units_wasted": 19, "waste_rate": 0.044 }
+            "period": {
+              "from": "2026-11-01",
+              "to": "2026-11-27"
+            },
+            "summary": {
+              "units_consumed": 412,
+              "units_wasted": 19,
+              "waste_rate": 0.044
+            }
           }
         },
         {

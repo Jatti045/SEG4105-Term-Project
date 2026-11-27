@@ -25,12 +25,12 @@
         <mxCell id="ent-E4" value="Physical Refrigerator Contents" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;" parent="1" vertex="1">
           <mxGeometry as="geometry" x="700" y="40" width="160" height="60" />
         </mxCell>
-        <mxCell id="flow-F1" value="Item details, expiry dates, inventory&lt;br&gt;corrections, inventory queries" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.3000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3235;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E1" target="proc-0">
+        <mxCell id="flow-F1" value="Item details, expiry dates, inventory&lt;br&gt;corrections, inventory queries, waste&lt;br&gt;entries" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.3000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3235;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E1" target="proc-0">
           <mxGeometry as="geometry" relative="1" x="-0.4315">
             <Array as="points">
               <mxPoint x="420" y="58" />
             </Array>
-            <mxPoint x="0.0" y="-18.0" as="offset" />
+            <mxPoint x="0.0" y="-25.0" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="flow-F2" value="Current inventory, expiry&lt;br&gt;warnings, low-stock notifications" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.2455;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3125;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-0" target="ent-E1">
