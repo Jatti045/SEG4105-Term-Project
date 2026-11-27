@@ -1,0 +1,626 @@
+{
+  "diagram": "Entity Relationship Diagram",
+  "notation": "UML class diagram",
+  "version": "0.1-draft",
+  "notes": [
+    "Each entity names the Level-0 data store it belongs to (level0-dfd.json). The diagram shows this as a stereotype.",
+    "Attribute flags: pk = primary key, fk = foreign key (Entity.attribute), nullable = optional, shown as [0..1].",
+    "Each attribute has a description, so the data dictionary can be generated from this file."
+  ],
+  "entities": [
+    {
+      "name": "Category",
+      "store": "D2 Product Catalog",
+      "description": "A group of products, used to organize the catalog and reports.",
+      "attributes": [
+        {
+          "name": "category_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique category identifier."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Category name, e.g. Dairy or Produce."
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "store": "D2 Product Catalog",
+      "description": "A kind of item the system can recognize, e.g. Milk 2L.",
+      "attributes": [
+        {
+          "name": "product_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique product identifier."
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "fk": "Category.category_id",
+          "description": "Category the product belongs to."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Display name, e.g. Milk 2L."
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "description": "Counting unit, e.g. carton, tub, or bag."
+        },
+        {
+          "name": "unit_weight_g",
+          "type": "int",
+          "description": "Weight of one full, unopened unit in grams, including packaging. Used to estimate the item count from a row's weight."
+        },
+        {
+          "name": "package_weight_g",
+          "type": "int",
+          "description": "Weight of the empty packaging in grams. Used to estimate how much of a partly used item is left: (measured weight - package_weight_g) / (unit_weight_g - package_weight_g)."
+        },
+        {
+          "name": "shelf_life_days",
+          "type": "int",
+          "description": "Typical days until expiry after stocking. Used to estimate a lot's expiry date."
+        },
+        {
+          "name": "recognition_label",
+          "type": "string",
+          "description": "Label the image recognition model outputs for this product."
+        }
+      ]
+    },
+    {
+      "name": "AlertThreshold",
+      "store": "D3 Alert Settings",
+      "description": "Alert limits for one product.",
+      "attributes": [
+        {
+          "name": "product_id",
+          "type": "int",
+          "pk": true,
+          "fk": "Product.product_id",
+          "description": "Product these limits apply to."
+        },
+        {
+          "name": "low_stock_threshold",
+          "type": "int",
+          "description": "Raise a low-stock alert when the total quantity is at or below this."
+        },
+        {
+          "name": "expiry_warning_days",
+          "type": "int",
+          "description": "Raise an expiry alert this many days before a lot expires."
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "description": "When the limits were last changed."
+        }
+      ]
+    },
+    {
+      "name": "Fridge",
+      "store": "D1 Inventory",
+      "description": "A smart fridge unit (simulated in this project).",
+      "attributes": [
+        {
+          "name": "fridge_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique fridge identifier."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Display name, e.g. Walk-in 1."
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "description": "Where the fridge is, e.g. Main kitchen."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "online or offline, based on when the last reading arrived."
+        },
+        {
+          "name": "last_reading_at",
+          "type": "datetime",
+          "nullable": true,
+          "description": "When the last reading arrived. Empty until the first reading."
+        }
+      ]
+    },
+    {
+      "name": "Row",
+      "store": "D1 Inventory",
+      "description": "One sensor row on a shelf. Holds one product at a time and reports its weight and item count.",
+      "attributes": [
+        {
+          "name": "row_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique row identifier."
+        },
+        {
+          "name": "fridge_id",
+          "type": "int",
+          "fk": "Fridge.fridge_id",
+          "description": "Fridge the row is in."
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "fk": "Product.product_id",
+          "nullable": true,
+          "description": "Product assigned to the row. Empty if the row is unassigned."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "description": "Physical position, e.g. Shelf 2, Row 3."
+        },
+        {
+          "name": "current_weight_g",
+          "type": "int",
+          "description": "Latest weight reading in grams."
+        },
+        {
+          "name": "current_count",
+          "type": "int",
+          "description": "Latest item count."
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "description": "When the latest reading was applied."
+        }
+      ]
+    },
+    {
+      "name": "StockItem",
+      "store": "D1 Inventory",
+      "description": "One physical item in the fridge, e.g. one head of lettuce. Each has its own entry and expiry date.",
+      "attributes": [
+        {
+          "name": "item_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique item identifier."
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "fk": "Product.product_id",
+          "description": "What the item is, from the product catalog."
+        },
+        {
+          "name": "row_id",
+          "type": "int",
+          "fk": "Row.row_id",
+          "description": "Row the item is stored in."
+        },
+        {
+          "name": "added_at",
+          "type": "datetime",
+          "description": "Entry date: when the item was first detected in the fridge."
+        },
+        {
+          "name": "expiry_date",
+          "type": "date",
+          "description": "Entry date plus the product's shelf life, unless staff enter a different date."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "in_stock, consumed, wasted, or removed."
+        },
+        {
+          "name": "removed_at",
+          "type": "datetime",
+          "nullable": true,
+          "description": "When the item left the fridge. Empty while in stock."
+        }
+      ]
+    },
+    {
+      "name": "WasteRecord",
+      "store": "D4 Stock History",
+      "description": "An item that was thrown out instead of used, e.g. because it expired. Used for waste tracking and reports.",
+      "attributes": [
+        {
+          "name": "waste_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique waste record identifier."
+        },
+        {
+          "name": "item_id",
+          "type": "int",
+          "fk": "StockItem.item_id",
+          "description": "Item that was thrown out."
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "fk": "User.user_id",
+          "nullable": true,
+          "description": "Staff member who logged it. Empty when the system detected it, e.g. an expired item removed from the fridge."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "description": "expired, spoiled, damaged, or other."
+        },
+        {
+          "name": "recorded_at",
+          "type": "datetime",
+          "description": "When the item was thrown out."
+        }
+      ]
+    },
+    {
+      "name": "Alert",
+      "store": "D5 Alerts",
+      "description": "An expiry or low-stock alert. Stays active until a manager clears it.",
+      "attributes": [
+        {
+          "name": "alert_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique alert identifier."
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "fk": "Product.product_id",
+          "description": "Product the alert is about."
+        },
+        {
+          "name": "item_id",
+          "type": "int",
+          "fk": "StockItem.item_id",
+          "nullable": true,
+          "description": "Item that is expiring. Empty for low-stock alerts."
+        },
+        {
+          "name": "alert_type",
+          "type": "string",
+          "description": "expiry or low_stock."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "active or cleared."
+        },
+        {
+          "name": "raised_at",
+          "type": "datetime",
+          "description": "When the alert was raised."
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "store": "D6 Users",
+      "description": "A staff member who uses the dashboard and receives alerts.",
+      "attributes": [
+        {
+          "name": "user_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique user identifier."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Full name."
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "description": "Email address that alerts are sent to."
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "description": "manager, kitchen_staff, or purchasing_staff."
+        },
+        {
+          "name": "active",
+          "type": "bool",
+          "description": "Whether the user can sign in and receive alerts."
+        }
+      ]
+    },
+    {
+      "name": "NotificationPreference",
+      "store": "D3 Alert Settings",
+      "description": "How one user wants to receive one type of alert.",
+      "attributes": [
+        {
+          "name": "preference_id",
+          "type": "int",
+          "pk": true,
+          "description": "Unique preference identifier."
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "fk": "User.user_id",
+          "description": "User the preference belongs to."
+        },
+        {
+          "name": "alert_type",
+          "type": "string",
+          "description": "expiry or low_stock."
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "email or dashboard."
+        },
+        {
+          "name": "enabled",
+          "type": "bool",
+          "description": "Whether alerts of this type are sent on this channel."
+        }
+      ]
+    },
+    {
+      "name": "StockSnapshot",
+      "store": "D4 Stock History",
+      "description": "Each product's stock level at the end of a day. Daily usage = previous day's quantity + items added that day - this quantity - items wasted that day.",
+      "attributes": [
+        {
+          "name": "snapshot_date",
+          "type": "date",
+          "pk": true,
+          "description": "Day the snapshot was taken."
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "pk": true,
+          "fk": "Product.product_id",
+          "description": "Product the quantity is for."
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "description": "Units in stock at the end of the day, across all fridges."
+        },
+        {
+          "name": "recorded_at",
+          "type": "datetime",
+          "description": "When the snapshot job ran."
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "R1",
+      "from": "Category",
+      "to": "Product",
+      "name": "groups",
+      "from_mult": "1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R2",
+      "from": "Product",
+      "to": "AlertThreshold",
+      "name": "has",
+      "from_mult": "1",
+      "to_mult": "0..1"
+    },
+    {
+      "id": "R3",
+      "from": "Product",
+      "to": "StockItem",
+      "name": "stocked as",
+      "from_mult": "1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R4",
+      "from": "Row",
+      "to": "Product",
+      "name": "stores",
+      "from_mult": "0..*",
+      "to_mult": "0..1"
+    },
+    {
+      "id": "R5",
+      "from": "Product",
+      "to": "Alert",
+      "name": "triggers",
+      "from_mult": "1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R6",
+      "from": "Fridge",
+      "to": "Row",
+      "name": "contains",
+      "from_mult": "1",
+      "to_mult": "1..*"
+    },
+    {
+      "id": "R7",
+      "from": "Row",
+      "to": "StockItem",
+      "name": "holds",
+      "from_mult": "1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R8",
+      "from": "StockItem",
+      "to": "WasteRecord",
+      "name": "discarded as",
+      "from_mult": "1",
+      "to_mult": "0..1"
+    },
+    {
+      "id": "R9",
+      "from": "StockItem",
+      "to": "Alert",
+      "name": "flagged by",
+      "from_mult": "0..1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R10",
+      "from": "User",
+      "to": "WasteRecord",
+      "name": "logs",
+      "from_mult": "0..1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R12",
+      "from": "User",
+      "to": "NotificationPreference",
+      "name": "sets",
+      "from_mult": "1",
+      "to_mult": "0..*"
+    },
+    {
+      "id": "R13",
+      "from": "Product",
+      "to": "StockSnapshot",
+      "name": "recorded in",
+      "from_mult": "1",
+      "to_mult": "0..*"
+    }
+  ],
+  "layout": {
+    "entities": {
+      "Category": {
+        "x": 40,
+        "y": 40
+      },
+      "Product": {
+        "x": 380,
+        "y": 40
+      },
+      "AlertThreshold": {
+        "x": 720,
+        "y": 40
+      },
+      "Row": {
+        "x": 40,
+        "y": 320
+      },
+      "Alert": {
+        "x": 720,
+        "y": 320
+      },
+      "Fridge": {
+        "x": 40,
+        "y": 620
+      },
+      "User": {
+        "x": 720,
+        "y": 620
+      },
+      "NotificationPreference": {
+        "x": 1060,
+        "y": 620
+      },
+      "StockItem": {
+        "x": 380,
+        "y": 320
+      },
+      "WasteRecord": {
+        "x": 380,
+        "y": 620
+      },
+      "StockSnapshot": {
+        "x": 1060,
+        "y": 40
+      }
+    },
+    "relationships": {
+      "R1": {
+        "from_side": "right",
+        "to_side": "left"
+      },
+      "R2": {
+        "from_side": "right",
+        "to_side": "left"
+      },
+      "R3": {
+        "from_side": "bottom",
+        "to_side": "top"
+      },
+      "R4": {
+        "from_side": "top",
+        "to_side": "left",
+        "points": [
+          [
+            155,
+            170
+          ]
+        ]
+      },
+      "R5": {
+        "from_side": "right",
+        "to_side": "top",
+        "points": [
+          [
+            835,
+            170
+          ]
+        ]
+      },
+      "R6": {
+        "from_side": "top",
+        "to_side": "bottom"
+      },
+      "R7": {
+        "from_side": "right",
+        "to_side": "left"
+      },
+      "R8": {
+        "from_side": "bottom",
+        "to_side": "top"
+      },
+      "R9": {
+        "from_side": "right",
+        "to_side": "left"
+      },
+      "R10": {
+        "from_side": "left",
+        "to_side": "right"
+      },
+      "R12": {
+        "from_side": "right",
+        "to_side": "left"
+      },
+      "R13": {
+        "from_side": "top",
+        "to_side": "top",
+        "points": [
+          [
+            560,
+            15
+          ],
+          [
+            1175,
+            15
+          ]
+        ]
+      }
+    }
+  }
+}
