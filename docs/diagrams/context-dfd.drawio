@@ -57,7 +57,7 @@
             <mxPoint x="0.0" y="18.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-F5" value="Alert thresholds, notification&lt;br&gt;preferences, report requests,&lt;br&gt;alert clearances" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.7000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6765;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E3" target="proc-0">
+        <mxCell id="flow-F5" value="Alert thresholds, notification&lt;br&gt;preferences, report requests,&lt;br&gt;alert clearances, user accounts" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.0000;exitY=0.7000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6765;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E3" target="proc-0">
           <mxGeometry as="geometry" relative="1" x="-0.4005">
             <Array as="points">
               <mxPoint x="480" y="482" />

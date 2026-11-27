@@ -73,7 +73,7 @@
         <mxCell id="proc-6.0-loc" value="Cloud" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;text;fillColor=none;strokeColor=none;fontSize=10;fontStyle=2;" parent="proc-6.0" vertex="1">
           <mxGeometry as="geometry" x="34" y="0" width="166" height="24" />
         </mxCell>
-        <mxCell id="proc-6.0-name" value="Manage Alert Settings" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=1;left=0;bottom=1;right=0;fillColor=#FFFFFF;fontSize=12;spacingLeft=12;spacingRight=12;" parent="proc-6.0" vertex="1">
+        <mxCell id="proc-6.0-name" value="Manage Users and Alert Settings" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=1;left=0;bottom=1;right=0;fillColor=#FFFFFF;fontSize=12;spacingLeft=12;spacingRight=12;" parent="proc-6.0" vertex="1">
           <mxGeometry as="geometry" x="1" y="24" width="198" height="46" />
         </mxCell>
         <mxCell id="store-D1" value="Inventory" style="shape=partialRectangle;top=1;left=1;bottom=1;right=0;html=1;whiteSpace=wrap;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;spacingLeft=40;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
@@ -104,6 +104,12 @@
           <mxGeometry as="geometry" x="1230" y="780" width="180" height="36" />
         </mxCell>
         <mxCell id="store-D5-id" value="D5" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=0;left=0;bottom=0;right=1;fillColor=#D3D3D3;fontSize=11;" parent="store-D5" vertex="1">
+          <mxGeometry as="geometry" x="0" y="0" width="34" height="36" />
+        </mxCell>
+        <mxCell id="store-D6" value="Users" style="shape=partialRectangle;top=1;left=1;bottom=1;right=0;html=1;whiteSpace=wrap;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;spacingLeft=40;container=1;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="1680" y="672" width="180" height="36" />
+        </mxCell>
+        <mxCell id="store-D6-id" value="D6" style="connectable=0;html=1;whiteSpace=wrap;strokeColor=#000000;fontFamily=Helvetica;fontColor=#000000;shape=partialRectangle;top=0;left=0;bottom=0;right=1;fillColor=#D3D3D3;fontSize=11;" parent="store-D6" vertex="1">
           <mxGeometry as="geometry" x="0" y="0" width="34" height="36" />
         </mxCell>
         <mxCell id="ent-E1" value="Kitchen Inventory Staff" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7EBA1;strokeColor=#000000;fontSize=12;fontFamily=Helvetica;fontColor=#000000;" parent="1" vertex="1">
@@ -159,7 +165,7 @@
             <mxPoint x="0.0" y="-25.0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="flow-F5a" value="Alert thresholds,&lt;br&gt;notification preferences" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.2500;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2500;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E3" target="proc-6.0">
+        <mxCell id="flow-F5a" value="Alert thresholds, notification&lt;br&gt;preferences, user accounts" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.2500;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2500;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E3" target="proc-6.0">
           <mxGeometry as="geometry" relative="1" x="-0.3913">
             <Array as="points">
               <mxPoint x="1430" y="875" />
@@ -176,7 +182,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="flow-F5c" value="Alert clearances" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8333;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.4167;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="ent-E3" target="proc-3.0">
-          <mxGeometry as="geometry" relative="1" x="-0.6400">
+          <mxGeometry as="geometry" relative="1" x="-0.4000">
             <mxPoint x="56.0" y="0.0" as="offset" />
           </mxGeometry>
         </mxCell>
@@ -264,6 +270,21 @@
         <mxCell id="flow-I13" value="Alert records" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=open;startSize=10;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.8750;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3333;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-3.0" target="store-D5">
           <mxGeometry as="geometry" relative="1" x="0.0000">
             <mxPoint x="47.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-I14" value="User accounts" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=1.0000;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0000;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="proc-6.0" target="store-D6">
+          <mxGeometry as="geometry" relative="1" x="0.0000">
+            <mxPoint x="0.0" y="-11.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-I15" value="Alert recipients" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endSize=10;startArrow=none;jumpStyle=arc;jumpSize=10;strokeColor=#000000;fontSize=11;fontFamily=Helvetica;fontColor=#000000;labelBackgroundColor=none;align=center;exitX=0.4444;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0000;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="store-D6" target="proc-3.0">
+          <mxGeometry as="geometry" relative="1" x="-0.2841">
+            <Array as="points">
+              <mxPoint x="1760" y="600" />
+              <mxPoint x="1350" y="600" />
+              <mxPoint x="1350" y="690" />
+            </Array>
+            <mxPoint x="0.0" y="-11.0" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>

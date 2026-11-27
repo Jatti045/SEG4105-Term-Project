@@ -212,7 +212,7 @@
       "id": "F5",
       "from": "E3",
       "to": "0",
-      "label": "Alert thresholds, notification preferences, report requests, alert clearances",
+      "label": "Alert thresholds, notification preferences, report requests, alert clearances, user accounts",
       "trigger": "On demand, through the dashboard",
       "data": [
         {
@@ -249,6 +249,16 @@
             "alert_id": "ALR-0907",
             "action": "clear",
             "note": "milk used for today's specials"
+          }
+        },
+        {
+          "name": "user_account",
+          "description": "Add, change, or deactivate a staff member who uses the dashboard and receives alerts.",
+          "example": {
+            "action": "add",
+            "name": "Sam Rivera",
+            "email": "sam.rivera@example.com",
+            "role": "kitchen_staff"
           }
         }
       ]

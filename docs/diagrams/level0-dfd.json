@@ -42,9 +42,9 @@
     },
     {
       "id": "6.0",
-      "name": "Manage Alert Settings",
+      "name": "Manage Users and Alert Settings",
       "location": "Cloud",
-      "description": "Validates and saves alert thresholds and notification preferences, then confirms the change."
+      "description": "Validates and saves user accounts, alert thresholds, and notification preferences, then confirms the change."
     }
   ],
   "data_stores": [
@@ -77,6 +77,12 @@
       "name": "Alerts",
       "location": "Cloud",
       "description": "Every alert raised, with type, product, and status. An alert stays active until the manager clears it."
+    },
+    {
+      "id": "D6",
+      "name": "Users",
+      "location": "Cloud",
+      "description": "Staff who use the dashboard and receive alerts: name, email, role, and whether the account is active."
     }
   ],
   "data_flows": [
@@ -117,8 +123,8 @@
     },
     {
       "id": "F5a", "parent": "F5", "from": "E3", "to": "6.0",
-      "label": "Alert thresholds, notification preferences",
-      "data": ["alert_threshold", "notification_preferences"]
+      "label": "Alert thresholds, notification preferences, user accounts",
+      "data": ["alert_threshold", "notification_preferences", "user_account"]
     },
     {
       "id": "F5b", "parent": "F5", "from": "E3", "to": "5.0",
@@ -213,6 +219,16 @@
       "id": "I13", "from": "3.0", "to": "D5", "bidirectional": true,
       "label": "Alert records",
       "description": "Saves new alerts and marks them cleared. Reads active alerts so the same alert is not raised twice."
+    },
+    {
+      "id": "I14", "from": "6.0", "to": "D6",
+      "label": "User accounts",
+      "description": "Added, changed, or deactivated user accounts."
+    },
+    {
+      "id": "I15", "from": "D6", "to": "3.0",
+      "label": "Alert recipients",
+      "description": "Names, emails, and roles of active users, so alerts reach the right people."
     }
   ],
   "layout": {
@@ -231,7 +247,8 @@
       "D4":  { "x": 460,  "y": 440, "w": 310, "h": 36 },
       "D1":  { "x": 800,  "y": 440, "w": 380, "h": 36 },
       "D3":  { "x": 1240, "y": 440, "w": 340, "h": 36 },
-      "D5":  { "x": 1230, "y": 780, "w": 180, "h": 36 }
+      "D5":  { "x": 1230, "y": 780, "w": 180, "h": 36 },
+      "D6":  { "x": 1680, "y": 672, "w": 180, "h": 36 }
     },
     "flows": {
       "F7":  { "path": [[130, 100], [130, 220]], "label_segment": 0, "label_side": "left", "label_wrap": 18 },
@@ -241,10 +258,10 @@
       "F2b": { "path": [[1210, 640], [1210, 70], [840, 70]], "label_segment": 1, "label_side": "above" },
       "F3":  { "path": [[1000, 295], [880, 295]], "label_segment": 0, "label_side": "below", "label_wrap": 16 },
       "F4":  { "path": [[880, 255], [1000, 255]], "label_segment": 0, "label_side": "above", "label_wrap": 18 },
-      "F5a": { "path": [[1220, 875], [1430, 875], [1430, 740]], "label_segment": 0, "label_side": "above", "label_wrap": 26 },
+      "F5a": { "path": [[1220, 875], [1430, 875], [1430, 740]], "label_segment": 0, "label_side": "above", "label_wrap": 30 },
       "F5b": { "path": [[980, 905], [760, 905], [760, 740]], "label_segment": 0, "label_side": "below" },
       "F6a": { "path": [[820, 740], [820, 875], [980, 875]], "label_segment": 1, "label_side": "above", "label_wrap": 18 },
-      "F5c": { "path": [[1180, 860], [1180, 740]], "label_segment": 0, "label_side": "right", "label_t": 0.18 },
+      "F5c": { "path": [[1180, 860], [1180, 740]], "label_segment": 0, "label_side": "right", "label_t": 0.3 },
       "F6b": { "path": [[1120, 740], [1120, 860]], "label_segment": 0, "label_side": "left" },
       "F6c": { "path": [[1530, 740], [1530, 905], [1220, 905]], "label_segment": 1, "label_side": "below" },
       "I2":  { "path": [[230, 270], [340, 270]], "label_segment": 0, "label_side": "above", "label_wrap": 16 },
@@ -258,7 +275,9 @@
       "I10": { "path": [[1120, 476], [1120, 640]], "label_segment": 0, "label_side": "left", "label_wrap": 12 },
       "I11": { "path": [[1300, 476], [1300, 640]], "label_segment": 0, "label_side": "right", "label_wrap": 14 },
       "I12": { "path": [[1480, 640], [1480, 476]], "label_segment": 0, "label_side": "right" },
-      "I13": { "path": [[1290, 740], [1290, 780]], "label_segment": 0, "label_side": "right" }
+      "I13": { "path": [[1290, 740], [1290, 780]], "label_segment": 0, "label_side": "right" },
+      "I14": { "path": [[1580, 690], [1680, 690]], "label_segment": 0, "label_side": "above", "label_wrap": 14 },
+      "I15": { "path": [[1760, 672], [1760, 600], [1350, 600], [1350, 690], [1320, 690]], "label_segment": 1, "label_side": "above", "label_t": 0.35 }
     }
   }
 }
