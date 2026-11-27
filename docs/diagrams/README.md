@@ -34,3 +34,17 @@ Version 2.0 adds one change from Deliverable 1: the **Physical Refrigerator Cont
 The Level-0 diagram takes its external entities from the context diagram. Each external flow names its parent context flow; for example, F1a and F1b together make up F1. On every build, the script checks that every context flow appears here with the same external entity, and that every data element is carried exactly once. If any of this is wrong, the build fails.
 
 The header band of each process shows where it runs: **Fridge device** (simulated edge hardware) or **Cloud**.
+
+## Entity relationship diagram (draft)
+
+![Entity relationship diagram](erd.png)
+
+The ERD uses UML class notation. [erd.json](erd.json) defines each entity's attributes, with keys, types, nullability and a description of each, plus the relationships and multiplicities. Each class header shows, as a «stereotype», which Level-0 data store the entity belongs to.
+
+```sh
+python build_erd.py
+"C:/Program Files/draw.io/draw.io.exe" -x -f png -s 2 -b 16 -o erd.png erd.drawio
+python build_data_dictionary.py
+```
+
+The last command generates the [data dictionary](../data-dictionary.md) from the same JSON file. It also checks that every foreign key points to an existing attribute.
