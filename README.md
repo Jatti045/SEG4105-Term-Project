@@ -8,6 +8,8 @@ Run `python3 app.py` from the project root, then open <http://localhost:8080/inv
 
 The prototype uses simulated items. It flags quantities of two or fewer as low stock and marks items expiring within two days. The full project plans include physical fridge sensors, cloud synchronization, and a dashboard.
 
-## Lab 8 teammate handoff
+## Documentation
 
-Start with [issue #1](https://github.com/Jatti045/SEG4105-Term-Project/issues/1) for the four assignments, branch commands, pull request targets, and screenshots to capture.
+- [Software Components](docs/COMPONENTS.md)
+- [System Architecture](docs/ARCHITECTURE.md)
+- [Development Methodology](docs/METHODOLOGY.md)
