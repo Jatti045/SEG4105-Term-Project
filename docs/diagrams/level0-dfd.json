@@ -14,7 +14,7 @@
       "id": "1.0",
       "name": "Capture and Send Readings",
       "location": "Fridge device",
-      "description": "When the door closes, reads every row (item ID, weight, item count), takes a shelf image, and sends the complete snapshot to the backend. No processing on the device (ADR-001) and no local buffering (ADR-002). In this project, a simulator supplies the sensor and camera input, with realistic latency and error rates."
+      "description": "When the door closes, weighs every row, takes a PNG image of each row, and sends the complete snapshot to the backend. No processing on the device (ADR-001) and no local buffering (ADR-002). In this project, a simulator supplies the sensor and camera input, with realistic latency and error rates."
     },
     {
       "id": "2.0",

@@ -1,0 +1,17 @@
+{
+  "sheet": "/sprites/food.png",
+  "tile": 16,
+  "columns": 8,
+  "rows": 8,
+  "products": {
+    "milk_2l": [0, 2],
+    "greek_yogurt_750g": [0, 5],
+    "cheddar_block_400g": [3, 0],
+    "baby_spinach_312g": [1, 6],
+    "romaine_lettuce": [4, 7],
+    "fresh_basil": [3, 5],
+    "chicken_breast_1kg": [6, 2],
+    "salmon_fillet_500g": [5, 2],
+    "tomato_sauce_1l": [1, 0]
+  }
+}

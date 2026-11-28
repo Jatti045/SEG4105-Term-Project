@@ -1,0 +1,373 @@
+/* Fridge simulator page. Builds on the dashboard's tokens in styles.css. */
+
+.sim,
+.topbar-inner {
+  max-width: 1280px;
+}
+
+.sim-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  align-items: start;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .sim-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sim-location {
+  margin: 8px 2px 14px;
+  font-size: 14px;
+}
+
+/* The fridge cabinet: a white box with shelves inside. */
+.fridge-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 2px solid var(--grid-strong);
+  border-radius: 16px;
+  background: linear-gradient(var(--green-wash), var(--surface));
+  box-shadow: inset 0 0 0 6px var(--surface), var(--shadow);
+}
+
+.shelf {
+  padding-bottom: 12px;
+  border-bottom: 6px solid var(--grid);
+}
+
+.shelf:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.shelf-name {
+  margin: 0 0 8px;
+  color: var(--green-strong);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.shelf-rows {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.sim-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.sim-row.dirty {
+  border-color: var(--expiring-fg);
+  box-shadow: 0 0 0 2px var(--expiring-bg), var(--shadow);
+}
+
+.sim-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sim-row-label {
+  font-weight: 700;
+}
+
+/* Item sprites: one block per item, the opened one filled to its level. */
+.sprites {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 4px;
+  min-height: 46px;
+  padding: 6px 8px 0;
+  border-bottom: 4px solid var(--grid-strong);
+  border-radius: 6px 6px 0 0;
+  background: var(--green-wash);
+}
+
+.sprites.empty {
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sprite {
+  position: relative;
+  width: 16px;
+  height: 36px;
+  border: 1.5px solid var(--sprite);
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(to top, var(--sprite) var(--fill), transparent var(--fill));
+}
+
+.sprite.unknown {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  border-color: var(--mismatch-fg);
+  background: var(--mismatch-bg);
+  color: var(--mismatch-fg);
+  font-weight: 700;
+}
+
+.sprite-more {
+  align-self: center;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.field select {
+  padding: 6px 8px;
+  border: 1px solid var(--grid-strong);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+}
+
+.field input[type="range"] {
+  accent-color: var(--green);
+}
+
+.num-input.wide {
+  width: 100%;
+  text-align: left;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stepper-value {
+  flex: 1;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-row-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.sim-thumb {
+  width: 80px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid var(--grid);
+  border-radius: 4px;
+}
+
+.badges.wrap {
+  flex-wrap: wrap;
+}
+
+.small {
+  font-size: 12px;
+}
+
+/* Side panel: door status, send button, and the log. */
+.sim-panel {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--grid);
+  border-top: 3px solid var(--green);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.sim-panel h3 {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.door {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.door-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.door.open .door-dot {
+  background: var(--expiring-fg);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.check input {
+  accent-color: var(--green);
+}
+
+.btn-block {
+  width: 100%;
+  padding: 10px 16px;
+}
+
+.sim-log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 50vh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.sim-log > li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--green-wash);
+  font-size: 13px;
+}
+
+.sim-log-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.sim-log ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* Mock image recognition panel. */
+.recognizer {
+  padding-top: 12px;
+  border-top: 1px solid var(--grid);
+  font-size: 14px;
+}
+
+.recognizer summary {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.recognizer summary:hover {
+  color: var(--green-strong);
+}
+
+.recognizer > * + * {
+  margin-top: 10px;
+}
+
+.recognizer input[type="file"] {
+  font: inherit;
+  font-size: 12px;
+}
+
+.recognizer-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--green-tint);
+}
+
+.recognizer-result code {
+  font-size: 11px;
+  word-break: break-all;
+}
+
+.sample-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sample-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--grid);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sample:hover {
+  border-color: var(--green);
+}
+
+.sample img {
+  width: 100%;
+  border-radius: 3px;
+}
+
+.food-item {
+  display: inline-flex;
+  margin-bottom: 2px;
+}
+
+.sim-hint {
+  margin: -4px 0 0;
+}

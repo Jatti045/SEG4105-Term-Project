@@ -71,7 +71,18 @@
         {
           "name": "recognition_label",
           "type": "string",
-          "description": "Label the image recognition model outputs for this product."
+          "description": "Label the image recognition model outputs for this product. Unique."
+        },
+        {
+          "name": "active",
+          "type": "bool",
+          "description": "Whether the product is in the catalog. A removed product keeps its history but can't be assigned to rows."
+        },
+        {
+          "name": "icon",
+          "type": "int",
+          "nullable": true,
+          "description": "Tile in the food sprite sheet shown for the product: 0 to 63, row by row. Empty for no icon."
         }
       ]
     },
@@ -123,7 +134,7 @@
         {
           "name": "location",
           "type": "string",
-          "description": "Where the fridge is, e.g. Main kitchen."
+          "description": "Room the fridge is in, e.g. Main kitchen. Set from where it sits on the floor plan."
         },
         {
           "name": "status",
@@ -135,13 +146,33 @@
           "type": "datetime",
           "nullable": true,
           "description": "When the last reading arrived. Empty until the first reading."
+        },
+        {
+          "name": "plan_x",
+          "type": "int",
+          "description": "Left edge on the kitchen floor plan, in plan units (the plan is 1000 x 620)."
+        },
+        {
+          "name": "plan_y",
+          "type": "int",
+          "description": "Top edge on the kitchen floor plan, in plan units."
+        },
+        {
+          "name": "plan_w",
+          "type": "int",
+          "description": "Width on the kitchen floor plan, in plan units."
+        },
+        {
+          "name": "plan_h",
+          "type": "int",
+          "description": "Height on the kitchen floor plan, in plan units."
         }
       ]
     },
     {
       "name": "Row",
       "store": "D1 Inventory",
-      "description": "One sensor row on a shelf. Holds one product at a time and reports its weight and item count.",
+      "description": "One sensor row on a shelf. Holds one product at a time and reports its weight and an image.",
       "attributes": [
         {
           "name": "row_id",
@@ -160,7 +191,7 @@
           "type": "int",
           "fk": "Product.product_id",
           "nullable": true,
-          "description": "Product assigned to the row. Empty if the row is unassigned."
+          "description": "Product the row is set up for, from the fridge's configuration. Empty if the row is unassigned."
         },
         {
           "name": "label",
@@ -175,7 +206,7 @@
         {
           "name": "current_count",
           "type": "int",
-          "description": "Latest item count."
+          "description": "Item count estimated from the latest weight reading."
         },
         {
           "name": "updated_at",
@@ -220,7 +251,7 @@
         {
           "name": "status",
           "type": "string",
-          "description": "in_stock, consumed, wasted, or removed."
+          "description": "in_stock, consumed, wasted, or removed (taken out when the row was set up for another product)."
         },
         {
           "name": "removed_at",
@@ -269,7 +300,7 @@
     {
       "name": "Alert",
       "store": "D5 Alerts",
-      "description": "An expiry or low-stock alert. Stays active until a manager clears it.",
+      "description": "An expiry, low-stock, or stock mismatch alert. A stock mismatch means a row's sensor reading doesn't match the items listed in it. Stays active until a manager clears it.",
       "attributes": [
         {
           "name": "alert_id",
@@ -288,12 +319,19 @@
           "type": "int",
           "fk": "StockItem.item_id",
           "nullable": true,
-          "description": "Item that is expiring. Empty for low-stock alerts."
+          "description": "Item that is expiring. Empty for other alert types."
+        },
+        {
+          "name": "row_id",
+          "type": "int",
+          "fk": "Row.row_id",
+          "nullable": true,
+          "description": "Row whose reading doesn't match its listed items. Empty for other alert types."
         },
         {
           "name": "alert_type",
           "type": "string",
-          "description": "expiry or low_stock."
+          "description": "expiry, low_stock, or stock_mismatch."
         },
         {
           "name": "status",
@@ -360,7 +398,7 @@
         {
           "name": "alert_type",
           "type": "string",
-          "description": "expiry or low_stock."
+          "description": "expiry, low_stock, or stock_mismatch."
         },
         {
           "name": "channel",
@@ -501,6 +539,14 @@
       "name": "recorded in",
       "from_mult": "1",
       "to_mult": "0..*"
+    },
+    {
+      "id": "R14",
+      "from": "Row",
+      "to": "Alert",
+      "name": "flags",
+      "from_mult": "0..1",
+      "to_mult": "0..*"
     }
   ],
   "layout": {
@@ -618,6 +664,20 @@
           [
             1175,
             15
+          ]
+        ]
+      },
+      "R14": {
+        "from_side": "bottom",
+        "to_side": "bottom",
+        "points": [
+          [
+            230,
+            590
+          ],
+          [
+            900,
+            590
           ]
         ]
       }

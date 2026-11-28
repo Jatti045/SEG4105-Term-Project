@@ -1,0 +1,12 @@
+{
+  "milk_2l.png": { "label": "milk_2l", "confidence": 0.97 },
+  "greek_yogurt_750g.png": { "label": "greek_yogurt_750g", "confidence": 0.94 },
+  "cheddar_block_400g.png": { "label": "cheddar_block_400g", "confidence": 0.91 },
+  "baby_spinach_312g.png": { "label": "baby_spinach_312g", "confidence": 0.89 },
+  "romaine_lettuce.png": { "label": "romaine_lettuce", "confidence": 0.93 },
+  "fresh_basil.png": { "label": "fresh_basil", "confidence": 0.86 },
+  "chicken_breast_1kg.png": { "label": "chicken_breast_1kg", "confidence": 0.95 },
+  "salmon_fillet_500g.png": { "label": "salmon_fillet_500g", "confidence": 0.92 },
+  "tomato_sauce_1l.png": { "label": "tomato_sauce_1l", "confidence": 0.9 },
+  "empty.png": { "label": null, "confidence": 0.99 }
+}
