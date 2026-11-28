@@ -8,17 +8,35 @@ The app has three parts:
 - **Backend:** a Python [FastAPI](https://fastapi.tiangolo.com/) service in [backend/](backend/) that serves JSON under `/api`.
 - **Frontend:** a React app in [frontend/](frontend/), built and served with Vite (Node.js).
 
-## Run locally
+## Run with Docker
 
-You need Docker, Python 3.11+, and Node.js 20+.
+You need Docker. From the project root:
 
-1. Start the database from the project root:
+```sh
+docker compose up -d --build
+```
+
+This starts three containers:
+
+| Service | Address | What it is |
+|---|---|---|
+| `frontend` | <http://localhost:8090> | Manager dashboard; the fridge simulator is at <http://localhost:8090/simulator.html> |
+| `backend` | <http://localhost:8000> | FastAPI; interactive API docs at <http://localhost:8000/docs> |
+| `db` | `localhost:5440` | PostgreSQL; database, user, and password are all `smart_fridge` |
+
+Change the ports or credentials with `FRONTEND_PORT`, `BACKEND_PORT`, `POSTGRES_PORT`, and `POSTGRES_*` values in a `.env` file. Run `docker compose up -d --build` again after changing code, and `docker compose down` to stop.
+
+The database keeps its data between runs. Its init scripts run only when the data volume is first created, so after changing them (or to refresh the sample dates), run `docker compose down -v` and start again. **`-v` deletes all data**, including anything changed in the dashboard.
+
+## Run for development
+
+For hot reload, run the backend and frontend outside Docker. You need Python 3.11+ and Node.js 20+.
+
+1. Start only the database:
 
    ```sh
-   docker compose up -d
+   docker compose up -d db
    ```
-
-   PostgreSQL listens on `localhost:5440`. The database, user, and password are all `smart_fridge`; override them with `POSTGRES_*` values in a `.env` file. The init scripts run only when the data volume is first created, so after changing them (or to refresh the sample dates), run `docker compose down -v` and start again.
 
 2. Start the backend on port 8000:
 

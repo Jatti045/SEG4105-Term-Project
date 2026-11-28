@@ -18,5 +18,32 @@ services:
       timeout: 5s
       retries: 10
 
+  # FastAPI: the dashboard, fridge, and recognition APIs.
+  backend:
+    build: ./backend
+    container_name: smart-fridge-backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-smart_fridge}:${POSTGRES_PASSWORD:-smart_fridge}@db:5432/${POSTGRES_DB:-smart_fridge}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # The manager dashboard (/) and the fridge simulator (/simulator.html).
+  frontend:
+    build: ./frontend
+    container_name: smart-fridge-frontend
+    ports:
+      - "${FRONTEND_PORT:-8090}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
 volumes:
   db-data:

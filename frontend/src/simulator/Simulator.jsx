@@ -478,6 +478,10 @@ export default function Simulator() {
               {fridge && <p className="muted sim-location">{fridge.location}</p>}
 
               <div className="fridge-body">
+                <div className="sim-cabinet-display" aria-hidden="true">
+                  <span className="sim-display-light" />
+                  <span>SMART INVENTORY UNIT</span>
+                </div>
                 {shelves.map((shelf) => (
                   <div className="shelf" key={shelf}>
                     <h2 className="shelf-name">{shelf}</h2>
